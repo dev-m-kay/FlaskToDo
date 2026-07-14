@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}ToDo List{% endblock %}
+
+{%block head%}
+	{{ super()}}
+{% endblock %}
+
+{% block header%}ToDo List{%endblock%}
+{% block body %}
+<div id = "container">
+    <form action="{{url_for('add')}}" method="post">
+        <label for="date">Due date: </label>
+        <input type="date" name="date" id="date">
+        <label for="newTask">Description: </label>
+        <input type="text" name="newTask" id="newTask" placeholder="File Taxes">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<h2>Overdue Tasks</h2>
+    {% for task in overdue %}
+        <div id="container">
+            <p>{{task[1] | dateformat}}: {{task[2]}}</p>
+            <p>[<a href="http://odin.unomaha.edu:11596/mark_complete/{{task[0]}}">Mark Complete</a>][<a href="http://odin.unomaha.edu:11596/delete_task/{{task[0]}}">Delete</a>]</p>
+        </div>
+	{% endfor %}
+<h2>Pending Tasks</h2>
+	{% for task in inprog %}
+        <div id="container">
+            <p>{{task[1] | dateformat}}: {{task[2]}}</p>
+            <p>[<a href="http://odin.unomaha.edu:11596/mark_complete/{{task[0]}}">Mark Complete</a>][<a href="http://odin.unomaha.edu:11596/delete_task/{{task[0]}}">Delete</a>]</p>
+        </div>
+	{% endfor %}
+<h2>Completed Tasks</h2>
+	{% for task in finished %}
+        <div id="container">
+            <p>{{task[2] | dateformat}}: {{task[3]}}</p>
+            <p>[<a href="http://odin.unomaha.edu:11596/delete_task/{{task[0]}}">Delete</a>]</p>
+        </div>
+	{% endfor %}
+{% endblock %}
